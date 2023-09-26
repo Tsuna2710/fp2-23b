@@ -45,10 +45,10 @@ public class DemoBatalla {
 			System.out.println("posicion: "+misNaves[pos].getFila()+","+misNaves[pos].getColumna());
 		}
 		else System.out.println("No encontrado");
-		System.out.println("Ordanar por puntos (Usando Burbuja)");
+		System.out.println("Ordenar por puntos (Usando Burbuja)");
 		ordenarPorPuntosBurbuja(misNaves);
 		mostrarNaves(misNaves);
-		System.out.println("Ordanar por nombre (Usando Burbuja)");
+		System.out.println("ordenar por nombre (Usando Burbuja)");
 		ordenarPorNombreBurbuja(misNaves);
 		mostrarNaves(misNaves);
 		//mostrar los datos de la nave con dicho nombre, mensaje de "no encontrado" en caso contrario
@@ -62,16 +62,16 @@ public class DemoBatalla {
 		}
 		else System.out.println("No encontrado");
 		pos=busquedaBinariaNombre(misNaves,nombre);
-		System.out.println("Ordanar por Puntos (Selección)");
+		System.out.println("ordenar por Puntos (Selección)");
 		ordenarPorPuntosSeleccion(misNaves);
 		mostrarNaves(misNaves);
-		System.out.println("Ordanar por Puntos (inserción)");
+		System.out.println("ordenar por Puntos (inserción)");
 		ordenarPorPuntosInsercion(misNaves);
 		mostrarNaves(misNaves);
-		System.out.println("Ordanar por Nombre (Selección)");
+		System.out.println("ordenar por Nombre (Selección)");
 		ordenarPorNombreSeleccion(misNaves);
 		mostrarNaves(misNaves);
-		System.out.println("Ordanar por Nombre (inserción)");
+		System.out.println("ordenar por Nombre (inserción)");
 		ordenarPorNombreInsercion(misNaves);
 		mostrarNaves(misNaves);
 	}
