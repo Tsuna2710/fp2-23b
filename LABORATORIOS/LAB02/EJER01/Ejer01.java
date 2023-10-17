@@ -1,6 +1,5 @@
 package LAB02.EJER01;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Ejer01 {
