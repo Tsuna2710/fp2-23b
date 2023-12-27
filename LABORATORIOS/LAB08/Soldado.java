@@ -1,7 +1,7 @@
 package LAB08;
 
 public class Soldado {
-        private final String nombre;
+    private final String nombre;
     private final int fila,columna;
     private final int vida;
 
@@ -57,6 +57,5 @@ public class Soldado {
                     return "k";
             }
         return "inv";
-    }
-
+    } 
 }
