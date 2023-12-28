@@ -1,190 +1,233 @@
 package LAB07;
-public class Videojuego4 {
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+
+public class Videojuego4 {
     public static void main(String[] args) {
-        Soldado[] Ejercito1=CrearEjercito(); 
-        Soldado[] Ejercito2=CrearEjercito();
-        Tablero(Ejercito1, Ejercito2);
-        System.out.println("");
-        System.out.println("Ejercito 1 ( 0 )");
-        for(int i=0;i<Ejercito1.length;i++){
-            System.out.println(Ejercito1[i].toString());
-        }
-        System.out.println("===========================");
-        System.out.print("Mayor vida: ");
-        System.out.println(mayorVida(Ejercito1).getNombre()+" \t Vida:"+
-                mayorVida(Ejercito1).getVida());
-        System.out.println("Promedio de Vida: "+promedioVida(Ejercito1));
-        System.out.println("===========================");
-        System.out.println("Ordenar por vida(mayor a menor)");
-        imprimirVida(OrdenarPorVida(Ejercito1));
-        System.out.println("Ordenar por vida-Insercion(menor a mayor)");
-        imprimirVida(OrdenarVidaInsercion(Ejercito1));
+		
+		ArrayList<Soldado> Ejercito1=CrearEjercito();
+		ArrayList<Soldado> Ejercito2=CrearEjercito(Ejercito1);
+		System.out.println("\n");
+		
+		
+		Tablero(Ejercito1, Ejercito2);
+		
+		MostrarEjercitos(Ejercito1, Ejercito2);
+		
+		MostrarDatos(Ejercito1, Ejercito2);	
+        
         System.out.println("");
         System.out.println("===========================");
         System.out.println("===========================");
         System.out.println("===========================");
         System.out.println("===========================");
         System.out.println("");
-        System.out.println("Ejercito 2 ( X )");
-        for(int i=0;i<Ejercito2.length;i++){
-            System.out.println(Ejercito2[i].toString());
-        }
-        System.out.println("===========================");
-        System.out.print("Mayor vida: ");
-        System.out.println(mayorVida(Ejercito2).getNombre()+" \t Vida:"+
-                mayorVida(Ejercito2).getVida());
-        System.out.println("Promedio de Vida: "+promedioVida(Ejercito2));
-        System.out.println("===========================");
-        System.out.println("Ordenar por vida(mayor a menor)");
-        imprimirVida(OrdenarPorVida(Ejercito2));
-        System.out.println("Ordenar por vida-Insercion(menor a mayor)");
-        imprimirVida(OrdenarVidaInsercion(Ejercito2));
-        System.out.println("");
-        System.out.println("===========================");
-        System.out.println("===========================");
-        System.out.println("===========================");
-        System.out.println("===========================");
-        System.out.println("");
+        System.out.println("\n \n \nBATALLA");
         Batalla(Ejercito1,Ejercito2);
+        System.out.println("\n \n \n");
+
         
+	}
+	public static ArrayList<Soldado> CrearEjercito(){
+		
+		int n=(int)(Math.random()*10+1);
+		
+		String Nombre;
+		Soldado aux;
+		ArrayList<Soldado> Ejercito=new ArrayList<>();
+		
+		for(int i =0;i<n;i++){
+			Nombre="Soldado"+(i)+"x"+1;
+			aux=new Soldado(Nombre);
+			Ejercito.add(aux);
+			
+			for(int j=0;j<i;j++){
+				
+				if(CasilleroOcupado(Ejercito.get(i),Ejercito.get(j))){
+					Ejercito.remove(i);
+					i--;
+					break;
+				}
+			}
+		}
+		return Ejercito;
+	}
+	public static ArrayList<Soldado> CrearEjercito(ArrayList<Soldado> Ejercito1){
+		
+		int n=(int)(Math.random()*10+1);
+		
+		String Nombre;
+		Soldado aux;
+		ArrayList<Soldado> Ejercito=new ArrayList<>();
+		for(int i =0;i<n;i++){
+			
+			
+			Nombre="Soldado"+(i)+"x"+2;
+			
+			aux=new Soldado(Nombre);
+			Ejercito.add(aux);
+			
+			for(int j=0;j<i;j++){
+				
+				if(CasilleroOcupado(Ejercito.get(i),Ejercito.get(j))){
+					Ejercito.remove(i);
+					i--;
+					break;
+				}
+			}
+			for(int j=0;j<Ejercito1.size();j++){
+				if(CasilleroOcupado(Ejercito.get(i),Ejercito1.get(j))){
+					Ejercito.remove(i);
+					i--;
+					break;
+				}
+			}
+		}
+		return Ejercito;
+	}
+	
+	//metodo para verificar si dos soldados ocupan el mismo casillero
+	public static boolean CasilleroOcupado(Soldado a,Soldado b){
+		return a.getFila()==b.getFila() && a.getColumna()==b.getColumna();
+	}
+	public static void Tablero(ArrayList<Soldado> MiEjercito ,ArrayList<Soldado> TuEjercito){
+		int Auxiliar;
+		System.out.println("\t  a\t  b\t  c\t  d\t  e\t  f\t  g\t  h\t  i\t  j");
+		for (int x=0;x<10;x++){
+			System.out.print("\t");
+			for (int a=0;a<10;a++){
+				System.out.print(" ___ \t");
+			}
+			System.out.println("");
+			
+			System.out.print((x+1)+"\t");
+			for (int b=0;b<10;b++){
+				Auxiliar=0;
+				System.out.print("|");
+				for (int m=0;m<MiEjercito.size();m++) {
+					if (MiEjercito.get(m).getFila() == x+1 && MiEjercito.get(m).getColumna() == b+1) {
+						System.out.print(" 0 ");
+						Auxiliar=1;
+					}
+				}
+				for (int m=0;m<TuEjercito.size();m++) {
+					if (TuEjercito.get(m).getFila() == x+1 && TuEjercito.get(m).getColumna() == b+1) {
+						System.out.print(" X ");
+						Auxiliar=1;
+					}
+				}
+				
+				if(Auxiliar==0) {
+					System.out.print("   ");
+				}
+				System.out.print("|\t");
+				
+			}
+			System.out.println("");
+			System.out.print("\t");
+			for (int c=0;c<10;c++){
+				System.out.print("|___|\t");
+			}
+			System.out.println("");
+		}
+		
+	}
+	public static void MostrarEjercitos(ArrayList<Soldado> Ejercito1,ArrayList<Soldado> Ejercito2){
+		int mayor;
+		if(Ejercito1.size()>Ejercito2.size()) mayor=Ejercito1.size();
+		else mayor=Ejercito2.size();
+		System.out.println("\nEjercito 1 -0- \t\t\t\t\t\t\tEjercito 2 -X-");
+		for(int i=0;i<mayor;i++){
+			
+			if(i<Ejercito1.size()){
+				System.out.print(Ejercito1.get(i).toString()+"\t\t");
+			}
+			else System.out.print("\t\t\t\t\t\t\t\t");
+			if(i<Ejercito2.size()){
+				System.out.print(Ejercito2.get(i).toString());
+			}
+			System.out.print("\n");
+		}
+		
+	}
+	public static Soldado mayorVida(ArrayList<Soldado> a){
+		int mayor=0;
+		Soldado Mayor=null;
+		for(int i=0;i<a.size();i++){
+			if(a.get(i).getNivelVida()>mayor){
+				Mayor=a.get(i);
+				mayor=a.get(i).getNivelVida();
+			}
+			
+		}
+		return Mayor;
+	}
+	public static double promedioVida(ArrayList<Soldado> a){
+		return (double)sumaVida(a)/(double)a.size();
+	}
+	public static int sumaVida(ArrayList<Soldado> a){
+		int suma=0;
+		for(int i=0;i<a.size();i++){
+			suma=suma+a.get(i).getNivelVida();
+		}
+		return suma;
+	}
+	public static ArrayList<Soldado> OrdenarPorVida(ArrayList<Soldado> Ejercito){
+		ArrayList<Soldado> a =Ejercito;
+		Soldado aux;
+		for(int x=0;x<a.size()-1;x++){
+			int mayor=a.get(x).getNivelVida(),pos=x;
+			for(int i=x+1;i<a.size();i++){
+				if(mayor<a.get(i).getNivelVida()) {
+					mayor=a.get(i).getNivelVida();
+					pos=i;
+				}  
+			}
+			aux=a.get(pos);
+			
+			a.set(pos, a.get(x));
+			a.set(x, aux);
+		}
+		return a;
+	}
+	public static ArrayList<Soldado> OrdenarVidaInsercion(ArrayList<Soldado> Ejercito){
+		ArrayList<Soldado>a=Ejercito;
+		int auxiliar,y;
+		Soldado aux;
+		for(int x=1;x<a.size();x++){
+			aux=a.get(x);
+			auxiliar=a.get(x).getNivelVida();
+			y=x-1;
+			while(y>-1 && a.get(y).getNivelVida()>auxiliar){
+				a.set(y+1, a.get(y));
+				y=y-1;
+			}
+			a.set(y+1, aux);
+		}
+		return a;
+	}
+	public static void MostrarDatos(ArrayList<Soldado> a,ArrayList<Soldado> b){
+		System.out.println("\nEjercito 1 -0- \t\t\t\t\ttEjercito 2 -X-");
+		MostrarEjercitos(a,b);
+		System.out.println("\n\t\t\tPromedio\n");
+		System.out.println("\nEjercito 1 -0- \t\t\ttEjercito 2 -X-");
+		System.out.println("Prom vida:"+promedioVida(a)+"\t\t"+"Prom vida:"+promedioVida(b));
+		System.out.println("\n\t\tOrdenar por Vida inspeccion \n");
+		MostrarEjercitos(OrdenarPorVida(a),OrdenarPorVida(b));
+		System.out.println("\n\t\tOrdenar por Vida insercion \n");
+		MostrarEjercitos(OrdenarVidaInsercion(a),OrdenarVidaInsercion(b));
+	
     }
-        
-    public static Soldado[] CrearEjercito(){
-        
-        int n=(int)(Math.random()*10+1),Vida,Fila,Columna=0,contador;
-        String Nombre;
-        Soldado[] miEjercito=new Soldado[n];
-        for(int i =0;i<miEjercito.length;i++){
-            while(true){
-                contador=0;
-                Nombre="Soladodo"+(i+1);
-                Vida=(int)(Math.random()*5+1);
-                Fila=(int)(Math.random()*10+1);
-                Columna=(int)(Math.random()*10+1);
-                miEjercito[i]=new Soldado(Nombre,Fila,Columna,Vida);
-                for(int j=0;j<i;j++){
-                    if(Fila==miEjercito[j].getFila() && Columna==miEjercito[j].getColumna()){
-                        contador++;
-                    }
-                }
-                if(contador==0) {
-                    break;
-                    
-                }
-            }
-            
-            
-        }
-        return miEjercito;
-    }
-    public static void Tablero(Soldado[] MiEjercito,Soldado[] TuEjercito){
-        int Auxiliar;
-        for (int x=0;x<10;x++){
-            for (int a=0;a<10;a++){
-                System.out.print(" ___ \t");
-            }
-            System.out.println("");
-            
-            for (int b=0;b<10;b++){
-                Auxiliar=0;
-                System.out.print("|");
-                for (int m=0;m<MiEjercito.length;m++) {
-                    if (MiEjercito[m].getFila() == x+1 && MiEjercito[m].getColumna() == b+1) {
-                        System.out.print(" 0 ");
-                        Auxiliar=1;
-                    }
-                }
-                for (int m=0;m<TuEjercito.length;m++) {
-                    if (TuEjercito[m].getFila() == x+1 && TuEjercito[m].getColumna() == b+1) {
-                        System.out.print(" X ");
-                        Auxiliar=1;
-                    }
-                }
-                
-                if(Auxiliar==0) {
-                    System.out.print("   ");
-                }
-                System.out.print("|\t");
-                
-            }
-            System.out.println("");
-            for (int c=0;c<10;c++){
-                System.out.print("|___|\t");
-            }
-            System.out.println("");
-        }
-        
-    }  
-    public static Soldado mayorVida(Soldado[] a){
-        int mayor=0;
-        Soldado Mayor=null;
-        for(int i=0;i<a.length;i++){
-            if(a[i].getVida()>mayor){
-                Mayor=a[i];
-                mayor=a[i].getVida();
-            }
-                
-        }
-        return Mayor;
-    }
-    public static double promedioVida(Soldado[] a){
-        int suma=0;
-        for(int i=0;i<a.length;i++){
-            suma=suma+a[i].getVida();
-        }
-        return (double)(suma)/(double)(a.length);
-    }
-    public static int sumaVida(Soldado[] a){
-        int suma=0;
-        for(int i=0;i<a.length;i++){
-            suma=suma+a[i].getVida();
-        }
-        return suma;
-    }
-    public static Soldado[] OrdenarPorVida(Soldado[] a){
-        int auxiliar;
-        Soldado aux;
-        for(int x=0;x<a.length-1;x++){
-            int mayor=a[x].getVida(),pos=x;
-            for(int i=x+1;i<a.length;i++){
-               if(mayor<a[i].getVida()) {
-                    mayor=a[i].getVida();
-                    pos=i;
-                }  
-            }
-            aux=a[pos];
-            a[pos]=a[x];
-            a[x]=aux;
-        }
-        return a;
-    }
-    public static void imprimirVida(Soldado[] a){
-        for(int i=0;i<a.length;i++){
-            System.out.println(a[i].getNombre()+" \tVida: "+a[i].getVida());
-        }
-    }
-    public static Soldado[] OrdenarVidaInsercion(Soldado[] a){
-        int auxiliar,y;
-        Soldado aux;
-        for(int x=1;x<a.length;x++){
-            aux=a[x];
-            auxiliar=a[x].getVida();
-            y=x-1;
-            while(y>-1 && a[y].getVida()>auxiliar){
-                a[y+1]=a[y];
-                y=y-1;
-            }
-            a[y+1]=aux;
-        }
-        return a;
-    }
-    //Definiremos al ganador all ejercito que tenga mayor acumulacion de vida.
-    public static void Batalla(Soldado[] a,Soldado[] b){
-        if(sumaVida(a)>sumaVida(b)) System.out.println("Victoria Ejercito 1");
-        else if(sumaVida(a)<sumaVida(b)) System.out.println("Victoria Ejercito 2");
+
+        //Definiremos al ganador all ejercito que tenga mayor acumulacion de vida.
+    public static void Batalla(ArrayList<Soldado> a,ArrayList<Soldado> b){
+        if(sumaVida(a)>sumaVida(b)) System.out.println("Victoria del Ejercito 1");
+        else if(sumaVida(a)<sumaVida(b)) System.out.println("Victoria del Ejercito 2");
         else System.out.println("Empate - sin ganador");
     }
-    
-    
+
+	    
+   
 }

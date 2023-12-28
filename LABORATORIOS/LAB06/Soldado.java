@@ -5,12 +5,16 @@ public class Soldado {
     private final int fila,columna;
     private final int vida;
 
-    public Soldado(String nombre, int fila, int columna, int vida) {
-        this.nombre = nombre;
-        this.fila = fila;
-        this.columna = columna;
-        this.vida = vida;
-    }
+
+    public Soldado(String nombre) {
+		this.nombre = nombre;
+		this.fila = (int)(Math.random()*10+1);
+		this.columna = (int)(Math.random()*10+1);
+		this.vida = (int)(Math.random()*5+1);
+	}
+	public int getNivelVida() {
+		return vida;
+	}
 
     public String getNombre() {
         return nombre;
